@@ -33,3 +33,13 @@ console.log(quantizeScale(50));
 console.log(quantizeScale(99));
 
 console.log(quantizeScale.invertExtent('white'));
+
+/////////////////////////////////
+
+const ordinalScale = d3.scaleOrdinal()
+    .domain(['sux', 'meh', 'kwlz', 'ossim', 'ossimtacular'])
+    .range(['red', 'white', 'green']);
+
+console.log(ordinalScale('sux'));
+console.log(ordinalScale('kwlz'));
+console.log(ordinalScale('ossimtacular')); // index overflow
