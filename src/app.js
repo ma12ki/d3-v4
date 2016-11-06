@@ -21,3 +21,15 @@ console.log(timeScale(new Date(2016, 2, 22)));
 console.log(timeScale(new Date(2016, 4, 4)));
 
 console.log(timeScale.invert(50));
+
+/////////////////////////////////
+
+const quantizeScale = d3.scaleQuantize()
+    .domain([0, 100])
+    .range(['red', 'white', 'green']);
+
+console.log(quantizeScale(10));
+console.log(quantizeScale(50));
+console.log(quantizeScale(99));
+
+console.log(quantizeScale.invertExtent('white'));
