@@ -1,45 +1,15 @@
-const linearScale = d3.scaleLinear()
-    .domain([0, 100]) // possible input value range
-    .range([0, 666]) // input values will be translated to this range
-    .clamp(true); // prevents value overflow
+d3.json('data/data.json', (data) => {
+    const extent = d3.extent(data, (row) => {
+        return row.age;
+    });
 
-console.log(linearScale(0));
-console.log(linearScale(100));
-console.log(linearScale(50));
-console.log(linearScale(30));
-console.log(linearScale(3000));
+    const scale = d3.scaleLinear()
+        .domain(extent)
+        .range([0, 600]);
 
-console.log(linearScale.invert(333)); // translate from output range back to input range
+    const ages = d3.set(data, (row) => {
+        return row.age;
+    });
 
-/////////////////////////////////
-
-const timeScale = d3.scaleTime()
-    .domain([new Date(2016, 0 , 1), new Date()])
-    .range([0, 100]);
-
-console.log(timeScale(new Date(2016, 2, 22)));
-console.log(timeScale(new Date(2016, 4, 4)));
-
-console.log(timeScale.invert(50));
-
-/////////////////////////////////
-
-const quantizeScale = d3.scaleQuantize()
-    .domain([0, 100])
-    .range(['red', 'white', 'green']);
-
-console.log(quantizeScale(10));
-console.log(quantizeScale(50));
-console.log(quantizeScale(99));
-
-console.log(quantizeScale.invertExtent('white'));
-
-/////////////////////////////////
-
-const ordinalScale = d3.scaleOrdinal()
-    .domain(['sux', 'meh', 'kwlz', 'ossim', 'ossimtacular'])
-    .range(['red', 'white', 'green']);
-
-console.log(ordinalScale('sux'));
-console.log(ordinalScale('kwlz'));
-console.log(ordinalScale('ossimtacular')); // index overflow
+    console.log(ages.values());
+});
