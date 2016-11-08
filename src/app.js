@@ -6,24 +6,22 @@ const scores = [
     { name: 'Emily', score: 88 }
 ];
 
-const update = d3.select('.chart')
-    .selectAll('div')
-    .data(scores, function(d) {
-        return d ? d.name : this.innerText;
-    })
-    .style('color', 'blue');
+const bar = d3.select('.chart')
+    .append('svg')
+        .attr('width', 225)
+        .attr('height', 300)
+    .selectAll('rect')
+    .data(scores)
+    .enter()
+        .append('g')
+        .attr('transform', (d, i) => `translate(0, ${i*33})`);
 
-const enter = update.enter()
-    .append('div')
+bar.append('rect')
+    .style('width', d => `${d.score}px`)
+    .classed('bar', true);
+
+bar.append('text')
+    .attr('y', 20)
     .text((d) => {
         return d.name;
-    })
-    .style('color', 'green');
-
-update.exit().remove();
-
-update.merge(enter)
-    .style('width', d => `${d.score}px`)
-    .style('height', '50px')
-    .style('background', 'lightgreen')
-    .style('border', '1px solid black');
+    });
